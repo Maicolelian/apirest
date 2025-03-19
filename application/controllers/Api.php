@@ -31,4 +31,20 @@ class Api extends CI_Controller {
         }
         return $this->fail($model->errors());
     }
+    
+    public function update($id = null) {
+        $model = new CustomerModel();
+        $data = $this->request->getJSON();
+        if ($model->insert($data)) {
+            $response = [
+                'status' => 201,
+                'error'  => null,
+                'messages' => [
+                    'success' => 'Cliente creado',
+                ],
+            ];
+            return $this->respondCreated($response);
+        }
+        return $this->fail($model->errors());
+    }
 }
